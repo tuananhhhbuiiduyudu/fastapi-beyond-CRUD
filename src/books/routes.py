@@ -4,6 +4,7 @@ from fastapi.exceptions import HTTPException
 from src.books.schemas import Book , BookUpdateModel
 from src.books.service import BookService
 from fastapi import HTTPException
+# from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel.ext.asyncio.session import AsyncSession
 from typing import List
 from src.db.main import get_session
@@ -12,7 +13,7 @@ book_service = BookService()
 
 @book_router.get('/' , response_model=List[Book])
 async def get_all_books(session : AsyncSession = Depends(get_session)):
-    books = book_service.get_all_books(session)
+    books = await book_service.get_all_books(session)
     return books 
 
 @book_router.post('/', status_code=status.HTTP_201_CREATED)
@@ -47,5 +48,6 @@ async def delete_book(book_uid : int , session:AsyncSession = Depends(get_sessio
         return None 
     else :
         raise HTTPException(status_code = status.HTTP_404_NOT_FOUND , detail = "Book not found")
+    
 
 

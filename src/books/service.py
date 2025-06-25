@@ -1,5 +1,7 @@
 # book_service.py
-from sqlmodel.ext.asyncio import AsyncSession
+# from sqlmodel.ext.asyncio import AsyncSession
+from sqlmodel.ext.asyncio.session import AsyncSession
+# from sqlalchemy.ext.asyncio import AsyncSession
 from .schemas import BookCreateModel, BookUpdateModel
 from sqlmodel import select , desc
 from .models import Book
@@ -56,5 +58,7 @@ class BookService:
             await session.delete(book_to_delete)
             
             await session.commit()
+            
+            return {}
         else : 
             return None 
