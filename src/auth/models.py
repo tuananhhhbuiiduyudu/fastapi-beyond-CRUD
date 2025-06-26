@@ -29,16 +29,17 @@ class User(SQLModel , table=True):
     first_name : str 
     last_name : str 
     is_verified : bool = Field(default=False)
+    password_hash :str = Field(exclude=True)
     created_at: datetime = Field(
         sa_column=Column(
             pg.TIMESTAMP(timezone=True),
-            default_factory=lambda: datetime.now(timezone.utc)
+            default=datetime.now
         )
     )
     update_at: datetime = Field(
         sa_column=Column(
             pg.TIMESTAMP(timezone=True),
-            default_factory=lambda: datetime.now(timezone.utc)
+            default=datetime.now
         )
     )
     
